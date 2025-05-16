@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +16,10 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
     <header 
@@ -72,12 +77,66 @@ const Header = () => {
         </a>
         
         {/* Mobile menu button */}
-        <button className="md:hidden text-white">
+        <button 
+          className="md:hidden text-white"
+          onClick={toggleMobileMenu}
+          aria-label="Toggle mobile menu"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
       </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-primary-900 shadow-lg py-4 absolute top-full left-0 right-0 animate-fadeIn">
+          <div className="container mx-auto px-4 flex flex-col space-y-3">
+            <a 
+              href="#home" 
+              className="text-white hover:text-secondary-300 transition-colors font-medium py-2"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Home
+            </a>
+            <a 
+              href="#about" 
+              className="text-white hover:text-secondary-300 transition-colors font-medium py-2"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              About
+            </a>
+            <a 
+              href="#services" 
+              className="text-white hover:text-secondary-300 transition-colors font-medium py-2"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Services
+            </a>
+            <a 
+              href="#reviews" 
+              className="text-white hover:text-secondary-300 transition-colors font-medium py-2"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Reviews
+            </a>
+            <a 
+              href="#contact" 
+              className="text-white hover:text-secondary-300 transition-colors font-medium py-2"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Contact
+            </a>
+            <a 
+              href="tel:4436568310"
+              className="bg-secondary-500 hover:bg-secondary-600 text-white py-2 px-5 rounded transition-colors shadow-sm font-medium text-center mt-2"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              (443) 656-8310
+            </a>
+          </div>
+        </div>
+      )}
     </header>
   );
 };
